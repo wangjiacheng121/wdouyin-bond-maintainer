@@ -35,7 +35,8 @@ jobs:
 
       - name: Run V2Ray
         run: |
-          nohup ./v2ray/v2ray -config ./v2ray/config.json &
+          # 使用正确的命令启动 V2Ray
+          nohup ./v2ray/v2ray run -config ./v2ray/config.json &
 
       - name: Store cookies into file
         run: echo "${{ secrets.COOKIES }}" > cookies.json
