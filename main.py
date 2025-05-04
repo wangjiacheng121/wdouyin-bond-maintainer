@@ -1,4 +1,5 @@
 import sys
+from asyncio import timeout
 from time import sleep , time
 import traceback
 from playwright.sync_api import sync_playwright
@@ -29,23 +30,22 @@ with sync_playwright() as playwright:
             page.get_by_role("paragraph").filter(has_text="私信").click()
 
         print('点击续火花用户')
-        page.get_by_text(f"{config['nickname']}").locator('div').first.click()
+        page.get_by_text(f"{config['nickname']}",exact=True).first.click()
         print('输入文本并回车')
         page.locator("#douyin-header-menuCt").get_by_role("textbox").locator("div").nth(2).click()
         page.locator("#douyin-header-menuCt").get_by_role("textbox").fill(f"{config['msg']}")
         page.locator("#douyin-header-menuCt").get_by_role("textbox").press("Enter")
 
-
+        try:
+            page.locator("text=发送失败").wait_for(timeout=10000)
+            print('发送失败！')
+        except Exception as e:
+            print('发送成功！')
 
         print("耗时："+str(int(time() - start_time)))
-        sleep(10)
+        # sleep(10)
 
         print('关闭浏览器')
-
-        try :
-            screenshot = page.screenshot(path='error.png',full_page=True)
-        except Exception as e:
-            print(e)
 
         context.close()
         browser.close()
