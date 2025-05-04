@@ -3,6 +3,7 @@ from playwright.sync_api import sync_playwright
 from config import get_config
 from runner import run
 
+print('开始执行...')
 try:
     with sync_playwright() as playwright:
         run(playwright,get_config())
