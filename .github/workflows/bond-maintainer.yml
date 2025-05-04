@@ -34,3 +34,10 @@ jobs:
 
       - name: Run Douyin Bond Maintainer
         run: python main.py
+
+      - name: Upload error screenshot
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: error-screenshot
+          path: error.png
