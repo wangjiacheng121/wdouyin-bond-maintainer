@@ -24,9 +24,11 @@ jobs:
           pip install playwright
           playwright install chromium
 
+      - name: Store cookies into file
+        run: echo "${{ secrets.COOKIES }}" > cookies.json
+
       - name: Set environment variables
         run: |
-          echo "COOKIES=${{ secrets.COOKIES }}" >> $GITHUB_ENV
           echo "NICKNAME=${{ secrets.NICKNAME }}" >> $GITHUB_ENV
           echo "MSG=${{ secrets.MSG }}" >> $GITHUB_ENV
 
