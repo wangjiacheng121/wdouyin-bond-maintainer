@@ -39,7 +39,7 @@ with sync_playwright() as playwright:
             page.locator("text=发送失败").wait_for(timeout=10000)
             print('发送失败！')
             raise RuntimeError('发送失败!')
-        except playwright.sync as e:
+        except TimeoutError as e:
             print('发送成功！')
 
         print("耗时："+str(int(time() - start_time)))
