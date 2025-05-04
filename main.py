@@ -20,10 +20,14 @@ with sync_playwright() as playwright:
 
         print('等待弹窗1')
         # 询问是否保存登陆信息 关闭
-        page.get_by_text("取消").click(timeout=100000)
+        try:
+            page.get_by_text("取消").click(timeout=150000)
+            print('点击私信按钮')
+            page.get_by_role("paragraph").filter(has_text="私信").click(timeout=100000)
+        except Exception:
+            print('点击私信按钮')
+            page.get_by_role("paragraph").filter(has_text="私信").click(timeout=100000)
 
-        print('点击私信按钮')
-        page.get_by_role("paragraph").filter(has_text="私信").click(timeout=100000)
         print('点击续火花用户')
         page.get_by_text(f"{config['nickname']}").nth(0).click(timeout=100000)
         print('输入文本并回车')
