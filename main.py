@@ -29,7 +29,7 @@ with sync_playwright() as playwright:
             page.get_by_role("paragraph").filter(has_text="私信").click()
 
         print('点击续火花用户')
-        page.get_by_text(f"{config['nickname']}").nth(0).click()
+        page.get_by_text(f"{config['nickname']}").locator('div').first.click()
         print('输入文本并回车')
         page.locator("#douyin-header-menuCt").get_by_role("textbox").locator("div").nth(2).click()
         page.locator("#douyin-header-menuCt").get_by_role("textbox").fill(f"{config['msg']}")
