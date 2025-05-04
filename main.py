@@ -21,17 +21,17 @@ with sync_playwright() as playwright:
         print('等待弹窗1')
         # 询问是否保存登陆信息 关闭
         try:
-            page.get_by_text("取消").click(timeout=150000)
+            page.get_by_text("取消").click(timeout=100000)
             print('点击私信按钮')
-            page.get_by_role("paragraph").filter(has_text="私信").click(timeout=100000)
+            page.get_by_role("paragraph").filter(has_text="私信").click()
         except Exception:
             print('点击私信按钮')
-            page.get_by_role("paragraph").filter(has_text="私信").click(timeout=100000)
+            page.get_by_role("paragraph").filter(has_text="私信").click()
 
         print('点击续火花用户')
-        page.get_by_text(f"{config['nickname']}").nth(0).click(timeout=100000)
+        page.get_by_text(f"{config['nickname']}").nth(0).click()
         print('输入文本并回车')
-        page.locator("#douyin-header-menuCt").get_by_role("textbox").locator("div").nth(2).click(timeout=100000)
+        page.locator("#douyin-header-menuCt").get_by_role("textbox").locator("div").nth(2).click()
         page.locator("#douyin-header-menuCt").get_by_role("textbox").fill(f"{config['msg']}")
         page.locator("#douyin-header-menuCt").get_by_role("textbox").press("Enter")
 
