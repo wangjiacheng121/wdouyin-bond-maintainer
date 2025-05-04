@@ -1,6 +1,5 @@
 import sys
-from asyncio import timeout
-from time import sleep , time
+from time import  time
 import traceback
 from playwright.sync_api import sync_playwright
 from config import get_config
