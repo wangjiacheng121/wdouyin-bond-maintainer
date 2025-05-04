@@ -35,16 +35,17 @@ with sync_playwright() as playwright:
         page.locator("#douyin-header-menuCt").get_by_role("textbox").fill(f"{config['msg']}")
         page.locator("#douyin-header-menuCt").get_by_role("textbox").press("Enter")
 
-        try :
-            screenshot = page.screenshot(path='error.png',full_page=True)
-        except Exception as e:
-            print(e)
+
 
         print("耗时："+str(int(time() - start_time)))
         sleep(10)
 
         print('关闭浏览器')
 
+        try :
+            screenshot = page.screenshot(path='error.png',full_page=True)
+        except Exception as e:
+            print(e)
 
         context.close()
         browser.close()
