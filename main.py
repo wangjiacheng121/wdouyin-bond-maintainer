@@ -1,7 +1,7 @@
 import sys
 from time import  time
 import traceback
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import sync_playwright , TimeoutError
 from config import get_config
 from utils import parse_to_playwright_cookies
 
@@ -24,7 +24,7 @@ with sync_playwright() as playwright:
             page.get_by_text("取消").click(timeout=100000)
             print('点击私信按钮')
             page.get_by_role("paragraph").filter(has_text="私信").click()
-        except Exception:
+        except TimeoutError:
             print('点击私信按钮')
             page.get_by_role("paragraph").filter(has_text="私信").click()
 
@@ -38,7 +38,8 @@ with sync_playwright() as playwright:
         try:
             page.locator("text=发送失败").wait_for(timeout=10000)
             print('发送失败！')
-        except Exception as e:
+            raise RuntimeError('发送失败!')
+        except playwright.sync as e:
             print('发送成功！')
 
         print("耗时："+str(int(time() - start_time)))
