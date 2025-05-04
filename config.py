@@ -3,6 +3,7 @@ import os
 def get_config():
     with open('cookies.json','r') as f:
         cookies = f.read()
+        print(cookies)
     nickname = os.getenv("NICKNAME")
     msg = os.getenv("MSG","火花")
 
