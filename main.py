@@ -1,10 +1,12 @@
 import sys
+from time import sleep , time
 import traceback
-from playwright.sync_api import sync_playwright , Playwright
+from playwright.sync_api import sync_playwright
 from config import get_config
 from utils import parse_to_playwright_cookies
 
 print('开始执行...')
+start_time = time()
 with sync_playwright() as playwright:
     try:
         config = get_config()
@@ -29,7 +31,8 @@ with sync_playwright() as playwright:
         page.locator("#douyin-header-menuCt").get_by_role("textbox").fill(f"{config['msg']}")
         page.locator("#douyin-header-menuCt").get_by_role("textbox").press("Enter")
 
-        page.wait_for_timeout(30000)
+        print("耗时："+str(int(time() - start_time)))
+        sleep(10)
 
         print('关闭浏览器')
         context.close()
