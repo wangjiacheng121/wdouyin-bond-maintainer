@@ -1,6 +1,4 @@
-下面是修改后的 `README.md`，加入了你现在使用的 `V2RAY_CONFIG` 和 `PROXY` 两个 Secret 的说明，并明确说明它们在使用 V2Ray 时是必须项：
 
----
 
 # Douyin-Bond-Maintainer 🔥
 
