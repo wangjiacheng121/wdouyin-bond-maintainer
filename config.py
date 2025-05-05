@@ -11,12 +11,12 @@ def get_config():
 
     print(proxy)
 
-    if proxy is None:
+    if proxy is '':
         proxy = None
     else:
         proxy = json.loads(proxy)
 
-    if cookies is None or nickname is None:
+    if cookies is '' or nickname is '':
         raise ValueError("SECRETS 未正确配置！")
 
     return {
