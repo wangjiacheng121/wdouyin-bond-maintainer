@@ -3,7 +3,7 @@ name: Douyin Bond Maintainer
 on:
   schedule:
     - cron: '0 5 * * *'  # 每天 UTC 5:00，即北京时间 13:00
-  workflow_dispatch:      # 允许手动触发
+  workflow_dispatch:
 
 jobs:
   bond:
@@ -24,34 +24,29 @@ jobs:
           pip install playwright
           playwright install chromium
 
-      - name: Download and configure V2Ray
+      - name: Download and configure V2Ray (if V2RAY_CONFIG is present)
+        if: ${{ secrets.V2RAY_CONFIG != '' }}
         run: |
-          # 下载并解压 V2Ray
           curl -LO https://github.com/v2fly/v2ray-core/releases/latest/download/v2ray-linux-64.zip
           unzip v2ray-linux-64.zip -d v2ray
-          
-          # 解码并生成 config.json
           echo "${{ secrets.V2RAY_CONFIG }}" | base64 --decode > v2ray/config.json
 
-      - name: Run V2Ray
+      - name: Run V2Ray (if V2RAY_CONFIG is present)
+        if: ${{ secrets.V2RAY_CONFIG != '' }}
         run: |
-          # 使用正确的命令启动 V2Ray
           nohup ./v2ray/v2ray run -config ./v2ray/config.json &
 
       - name: Store cookies into file
-        run: echo "${{ secrets.COOKIES }}" > cookies.json
+        run: echo "${{ secrets.COOKIES }}" | base64 --decode > cookies.json
 
       - name: Set environment variables
         run: |
           echo "NICKNAME=${{ secrets.NICKNAME }}" >> $GITHUB_ENV
           echo "MSG=${{ secrets.MSG }}" >> $GITHUB_ENV
+          echo "PROXY=${{ secrets.PROXY }}" >> $GITHUB_ENV
 
       - name: Run Douyin Bond Maintainer
-        run: |
-          # 设置代理环境变量
-          export http_proxy=socks5h://127.0.0.1:10808
-          export https_proxy=socks5h://127.0.0.1:10808
-          python main.py
+        run: python main.py
 
       - name: Upload error screenshot
         if: failure()

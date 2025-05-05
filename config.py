@@ -1,4 +1,5 @@
 import os
+import json
 
 def get_config():
     with open('cookies.json','r') as f:
@@ -6,6 +7,12 @@ def get_config():
         # print(cookies)
     nickname = os.getenv("NICKNAME")
     msg = os.getenv("MSG","火花")
+    proxy = os.getenv("PROXY")
+
+    if proxy is None:
+        proxy = None
+    else:
+        proxy = json.loads(proxy)
 
     if cookies is None or nickname is None:
         raise ValueError("SECRETS 未正确配置！")
@@ -13,5 +20,6 @@ def get_config():
     return {
         'cookies' : cookies,
         'nickname' : nickname,
-        'msg' : msg
+        'msg' : msg,
+        'proxy' : proxy
     }
