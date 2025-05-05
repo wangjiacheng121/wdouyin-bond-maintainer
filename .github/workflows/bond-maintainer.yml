@@ -24,17 +24,26 @@ jobs:
           pip install playwright
           playwright install chromium
 
-      - name: Download and configure V2Ray (if V2RAY_CONFIG is present)
-        if: ${{ secrets.V2RAY_CONFIG != '' }}
+      - name: Determine if V2RAY_CONFIG is set
+        run: |
+          if [ -n "${{ secrets.V2RAY_CONFIG }}" ]; then
+            echo "HAS_V2RAY=true" >> $GITHUB_ENV
+          else
+            echo "HAS_V2RAY=false" >> $GITHUB_ENV
+          fi
+
+      - name: Download and configure V2Ray
+        if: env.HAS_V2RAY == 'true'
         run: |
           curl -LO https://github.com/v2fly/v2ray-core/releases/latest/download/v2ray-linux-64.zip
           unzip v2ray-linux-64.zip -d v2ray
           echo "${{ secrets.V2RAY_CONFIG }}" | base64 --decode > v2ray/config.json
 
-      - name: Run V2Ray (if V2RAY_CONFIG is present)
-        if: ${{ secrets.V2RAY_CONFIG != '' }}
+      - name: Run V2Ray
+        if: env.HAS_V2RAY == 'true'
         run: |
           nohup ./v2ray/v2ray run -config ./v2ray/config.json &
+
 
       - name: Store cookies into file
         run: echo "${{ secrets.COOKIES }}" | base64 --decode > cookies.json
