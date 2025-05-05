@@ -9,8 +9,6 @@ def get_config():
     msg = os.getenv("MSG","火花")
     proxy = os.getenv("PROXY")
 
-    print(proxy)
-
     if proxy == '':
         proxy = None
     else:

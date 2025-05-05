@@ -1,5 +1,4 @@
 import json
-import base64
 
 def parse_to_playwright_cookies(cookies):
     # 处理 Cookies 代码来自 ChatGPT
@@ -25,7 +24,7 @@ def parse_to_playwright_cookies(cookies):
                 "Lax"
             )
         }
-        for c in json.loads(base64.b64decode(cookies).decode('utf-8'))
+        for c in json.loads(cookies)
     ]
 
     return converted
