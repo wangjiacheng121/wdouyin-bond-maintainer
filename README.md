@@ -26,13 +26,13 @@
 
 进入仓库 `Settings → Secrets and variables → Actions → Repository secrets`，添加以下变量：
 
-| 名称             | 说明                                                                                 |
-| -------------- |------------------------------------------------------------------------------------|
-| `COOKIES`      | 从 Cookie-Editor 获取的 Cookies（Base64 编码）                                             |
-| `NICKNAME`     | 要续火花的对象昵称（如“某人”）                                                                   |
-| `MSG`          | 留言内容（可选，默认为“火花”）                                                                   |
-| `V2RAY_CONFIG` | **（可选）Base64 编码的 V2Ray 配置文件**，用于解决在 GitHub Actions 中访问抖音超时                         |
-| `PROXY`        | **（可选）设置 Playwright 使用的代理地址**，如 `{"server": "socks5://127.0.0.1:10808"}` (以Json格式) |
+| 名称             | 说明                                                                           |
+| -------------- |------------------------------------------------------------------------------|
+| `COOKIES`      | 从 Cookie-Editor 获取的 Cookies（Base64 编码）                                       |
+| `NICKNAME`     | 要续火花的对象昵称（如“某人”）                                                             |
+| `MSG`          | 留言内容（可选，默认为“火花”）                                                             |
+| `V2RAY_CONFIG` | **（可选）Base64 编码的 V2Ray 配置文件**，用于解决在 GitHub Actions 中访问抖音超时                   |
+| `PROXY`        | **（可选）设置 Playwright 使用的代理地址**，如 `socks5://127.0.0.1:10808` |
 
 > ⚠️ 若使用 `V2RAY_CONFIG`，**必须同时设置 `PROXY`**，否则无法生效。
 
