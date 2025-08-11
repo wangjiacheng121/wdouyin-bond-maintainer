@@ -20,7 +20,28 @@ with sync_playwright() as playwright:
 
         print('等待弹窗1')
         # 询问是否保存登陆信息 关闭
-        try:
+    try:
+        # 创建定位器：匹配class和文本内容（处理可能的空格）
+        login_button = page.locator("div.ZkNVpl8h", has_text="登录")
+        
+        # 方法1：快速检查元素是否存在（不等待）
+        if login_button.count() > 0:
+            print("⚠️ 未登录状态：检测到登录按钮")
+            return False
+        
+        # 方法2：严格检查元素可见性（等待1000ms）
+        if login_button.is_visible(timeout=1000):
+            print("⚠️ 未登录状态：登录按钮可见")
+            return False
+        
+        print("✅ 已登录状态")
+        return True
+        
+    except Exception as e:
+        # 当元素不存在时会抛出错误
+        print(f"✅ 已登录状态（未找到登录按钮）")
+        return True
+    try:
             page.get_by_text("取消").click(timeout=600000)
             print('点击私信按钮')
             page.get_by_role("paragraph").filter(has_text="私信").click()
